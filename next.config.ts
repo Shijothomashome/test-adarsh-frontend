@@ -7,19 +7,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: 'upgrade-insecure-requests'
-          }
-        ],
-      }
-    ]
-  },
   async rewrites() {
     return [
       {
@@ -27,7 +14,7 @@ const nextConfig: NextConfig = {
         destination: 'https://13.201.20.66:3000/api/:path*',
       },
     ]
-  },
+  }
 }
 
 export default nextConfig
