@@ -1,11 +1,5 @@
 import { NextConfig } from 'next'
 
-const isProd = process.env.NODE_ENV === 'production'
-
-const apiDestination = isProd
-  ? 'https://13.201.20.66:3000'
-  : 'http://13.201.20.66:3000'
-
 const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -13,11 +7,24 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: 'upgrade-insecure-requests'
+          }
+        ],
+      }
+    ]
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: `${apiDestination}/api/:path*`,
+        destination: 'https://13.201.20.66:3000/api/:path*',
       },
     ]
   },
